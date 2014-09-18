@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>TEST HTML5 Notification</title>
+</head>
+<body>
+	<h1>Notification demo</h1>
+
+	<a href="javascript:;" id="show">事件触发</a>
+	<script src="nofity.js"></script>
+	<script>
+		window.onload = function(){
+			var notification = new Notify('title meh', {
+				body: 'ee',
+				onShowCallback: function(){
+					console.log('this is show callback')
+				},
+				onErrorCallback: function(){
+					console.log('this is error callback')
+				},
+				onCloseCallback: function(){
+					console.log('this is close callback')
+				},
+				onClickCallback: function(){
+					console.log('this is click callback')
+				},
+				timeout: 5
+			});
+
+
+			var btn = document.getElementById('show');
+			btn.addEventListener('click', function(e){
+				// notification.show();
+				notification.handleEvent(e)
+			});
+
+			
+			Notify.requestPermission(function(){
+				console.log('Granted requestPermission')
+			},function(){
+				console.log('Denied requestPermission')
+			},function(){
+				console.log('other requestPermission')
+			});
+
+			notification.show();
+
+
+			console.log(Notify.isSupport, 'this is notify support');
+			console.log(Notify.isPermission, 'this is nofity permission');
+		}
+	</script>
+</body>
+</html>
